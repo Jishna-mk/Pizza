@@ -1,0 +1,63 @@
+{%extends "staff/view_fooditems.html"%}
+{%load static%}
+{%block content%}
+<h2> Booking Details</h2>
+<div class="container">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-dark">
+          <tr>
+            <th>Food Item Name</th>
+            <th>Price</th>
+            <th>Quantity Booked</th>
+            <th>Total Price</th>
+            <th>Booked By</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Address</th>
+            <th>Phone Number</th>
+           
+          </tr>
+        </thead>
+        <tbody>
+          {% for detail in booking_details %}
+            <tr>
+              <td>{{ detail.food_item_name }}</td>
+              <td>{{ detail.price }}</td>
+              <td>{{ detail.quantity_booked }}</td>
+              <td>{{ detail.total_price }}</td>
+              <td>{{ detail.booked_by_username }}</td>
+              <td>{{ detail.booked_by_first_name }}</td>
+              <td>{{ detail.booked_by_last_name }}</td>
+              <td>{{ detail.address }}</td>
+              <td>{{ detail.phone_number }}</td>
+              
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script>
+    document.querySelectorAll('.mark-delivered-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const orderId = this.getAttribute('data-order-id');
+            fetch(`/update_order_status/${orderId}/`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success' && data.new_status === 'Order Delivered') {
+                        // Update the button's status
+                        button.parentNode.innerHTML = '<span class="badge badge-success">Order Delivered</span>';
+                    } else {
+                        // Handle error
+                        alert('Failed to update order status.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+    });
+</script>
+
+{%endblock%}

@@ -1,0 +1,79 @@
+{% extends "signup.html" %}
+{% load static %}
+{% block content %}  
+
+<style>
+    #alertBox {
+        margin-bottom: 20px;
+    }
+
+    .card {
+        border-radius: 15px;
+        box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+        padding: 20px;
+        margin-top: 15px;
+    }
+
+    .form-label {
+        font-weight: bold;
+    }
+
+    .btn-login {
+        background-color: #FFC26F;
+        color: #3d2503;
+        border: #3d2503;
+        max-width: 150px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .link {
+        color: #3d2503;
+        text-decoration: none;
+    }
+
+    .link:hover {
+        text-decoration: underline;
+    }
+</style>
+
+{% for message in messages %}
+    <div class="alert alert-success" role="alert" id="alertBox" style="width: 500px;">
+        <h6>{{ message.message }}</h6>
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+    </div>
+{% endfor %}
+
+<div class="container mb-5">
+    <div class="row justify-content-center">
+        <div class="card col-md-6">
+            <form class="" id="loginForm" action="{% url 'signin' %}" method="post">
+                {% csrf_token %}
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form1Example1">Username</label>
+                    <input type="text" id="form1Example1" name="username" class="form-control" />
+                </div>
+                <div class="form-outline mb-4">
+                    <label class="form-label" for="form1Example2">Password</label>
+                    <input type="password" id="form1Example2" name="password" class="form-control" />
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-login border-0 py-2" type="submit" style="margin-left: 200px;">Login</button>
+                </div>
+            </form>
+            <p class="text-center text-dark">Don't have an account? <a href="{% url 'signup' %}" class="link">Register Here</a></p>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var closeButtons = document.getElementsByClassName("closebtn");
+        for (var i = 0; i < closeButtons.length; i++) {
+            closeButtons[i].addEventListener("click", function() {
+                this.parentElement.style.display = "none";
+            });
+        }
+    });
+</script>
+{% endblock %}

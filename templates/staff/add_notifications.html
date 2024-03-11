@@ -1,0 +1,24 @@
+{% extends "staff/view_fooditems.html" %}
+
+{% load static %}
+
+
+
+
+{% block content %}
+<h2 class="text-center">Add Notification</h2>
+<div class="container col-md-6 mb-5 mt-5 p-3">
+<form method="post">
+  {% csrf_token %}
+  <div class="form-group">
+    <label for="id_title">Title:</label>
+    <input type="text" id="id_title" name="title" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="id_message">Message:</label>
+    <textarea id="id_message" name="message" class="form-control" rows="4"></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Add Notification</button>
+</form>
+</div>
+{% endblock %}

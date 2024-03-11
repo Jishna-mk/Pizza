@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Start your development with Pigga landing page.">
+    <meta name="author" content="Devcrud">
+    <title>canteen website</title>
+    <!-- font icons -->
+    <link rel="stylesheet" href="{%static 'vendors/themify-icons/css/themify-icons.css' %}">
+    <!-- Bootstrap + Pigga main styles -->
+	<link rel="stylesheet" href="{%static '/css/pigga.css' %}">
+</head>
+<body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
+    
+    <!-- First Navigation -->
+    <nav class="navbar nav-first navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="{%static '/imgs/navbar-brand.svg' %}" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Pigga Landing page">
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-primary" href="#home">CALL US : <span class="pl-2 text-muted">(123) 456 7890</span></a>
+                </li>                   
+            </ul>
+        </div>
+    </nav>
+    <!-- End of First Navigation --> 
+    <!-- Second Navigation -->
+    <nav class="nav-second navbar custom-navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+        <div class="container">
+            <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto"> 
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'index' %}">Home</a>
+                    </li>
+                </ul>
+                
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown" style="background-color: rgb(218, 182, 6); border-radius: 5px; padding: 8px; font-size: 20px;">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >
+                            Sign In
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'admin_signin' %}" style="color: black;">Sign in as Staff</a>
+                            <a class="dropdown-item" href="{% url 'signin' %}" style="color: black;">Sign in as User</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- End Of Second Navigation --> 
+{% block content %}
+<style>
+    /* Style for the label */
+    .link {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .link:hover {
+        color: rgb(37, 25, 25);
+        text-decoration: none;
+    }
+
+    /* Style for the fields */
+    .label-tag {
+        color: rgb(62, 36, 6);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: inline-block;
+        margin-bottom: .5rem;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="email"],
+    .form-group input[type="password"],
+    .form-group select {
+        width: 80%;
+        padding: 8px;
+        margin: 5px 0;
+        border: 1px solid rgb(173, 173, 173);
+        border-radius: 5px;
+    }
+
+    /* Center the form */
+    .center-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
+</style>
+{% for message in messages %}
+<div class="alert alert-danger alert-dismissible fade show" style="position: fixed; z-index: 90; right: 100px; top: 10px" role="alert">
+    <strong>{{ message }} !!!</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endfor %}
+{% if form.errors %}
+<div class="alert alert-danger alert-dismissible" style="margin-top: 100px; max-width: 700px;">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="font-size: 1.5em;">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    <strong>Error:</strong>
+    {{ form.errors }}
+</div>
+{% endif %}
+
+
+<div class="container" >
+    <h3 class="text-center">User Register</h3>
+    <div class="row">
+        <div class="col-md-6 mt-5 mx-auto mb-5" style="border: 1px solid black; ">
+            <div class="col-lg col-md col-sm col">
+                <form class="py-3 my-3 mb-5 " action="" method="POST">
+                    {% csrf_token %}
+                    <div class="text-center"> <!-- Center the form fields and labels -->
+                        {% for field in form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}" class="label-tag">{{ field.label }}:</label><br>
+                            {{ field }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <button class="btn btn-dark btn-block border-0 py-2" type="submit" style="max-width: 150px; align-items: center; margin-left: auto; margin-right: auto; background-color: #cb8008; color: #FFEBC1;">Register</button>
+                    </div>
+                    <br>
+                    <p class="text-center text-dark">Already have an account? <a href="{% url 'signin' %}" class="link">Login Here</a></p>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6 mt-5 mx-auto" style="margin-top: 200px; margin-left: 20px;"> <!-- This column holds the image -->
+            <img src="{% static '/imgs/pexels.jpg' %}" alt="nature" class="img-fluid" height="300" width="300" style="border-radius: 15px; margin-left: 100px; margin-top: 100px; box-shadow: rgba(74, 68, 34, 0.3) 0px 19px 38px, rgba(36, 35, 26, 0.22) 0px 15px 12px;">
+        </div>
+    </div>
+</div>
+{% endblock %}
+ <!-- Prefooter Section  -->
+ <div class="py-4 border border-lighter border-bottom-0 border-left-0 border-right-0 bg-dark">
+    <div class="container">
+        <div class="row justify-content-between align-items-center text-center">
+            <div class="col-md-3 text-md-left mb-3 mb-md-0">
+                <img src="{%static '/imgs/navbar-brand.svg' %}" width="100" alt="Download free bootstrap 4 landing page, free boootstrap 4 templates, Download free bootstrap 4.1 landing page, free boootstrap 4.1.1 templates, Pigga Landing page" class="mb-0">
+            </div>
+            <div class="col-md-9 text-md-right">
+                <a href="#" class="px-3"><small class="font-weight-bold">Our Company</small></a>
+                <a href="#" class="px-3"><small class="font-weight-bold">Our Location</small></a>
+                <a href="#" class="px-3"><small class="font-weight-bold">Help Center</small></a>
+                <a href="components.html" class="pl-3"><small class="font-weight-bold">Components</small></a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End of PreFooter Section -->
+
+<!-- Page Footer -->
+<footer class="border border-dark border-left-0 border-right-0 border-bottom-0 p-4 bg-dark">
+    <div class="container">
+        <div class="row align-items-center text-center text-md-left">
+            <div class="col">
+                <p class="mb-0 small">&copy; <script>document.write(new Date().getFullYear())</script>, <a href="https://www.devcrud.com" target="_blank">zionit</a>  All rights reserved </p> 
+            </div>
+            <div class="d-none d-md-block">
+                <h6 class="small mb-0">
+                    <a href="javascript:void(0)" class="px-2"><i class="ti-facebook"></i></a>
+                    <a href="javascript:void(0)" class="px-2"><i class="ti-twitter"></i></a>
+                    <a href="javascript:void(0)" class="px-2"><i class="ti-instagram"></i></a>
+                    <a href="javascript:void(0)" class="px-2"><i class="ti-google"></i></a>
+                </h6>
+            </div>
+        </div>
+    </div>
+    
+</footer>
+<!-- End of Page Footer -->
+
+<!-- core  -->
+<script src="{%static '/vendors/jquery/jquery-3.4.1.js' %}"></script>
+<script src="{%static '/vendors/bootstrap/bootstrap.bundle.js' %}"></script>
+
+<!-- bootstrap affix -->
+<script src="{%static '/vendors/bootstrap/bootstrap.affix.js' %}"></script>
+
+<!-- Pigga js -->
+<script src="{%static '/js/pigga.js' %}"></script>
+
+</body>
+</html>

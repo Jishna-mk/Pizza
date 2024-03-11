@@ -1,0 +1,17 @@
+{% extends "view_fooditems.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5 mb-5" style="height: 400px;">
+    <h1 class="text-center">User Profile</h1>
+  <p><strong>First Name:</strong> {{ user_profile.first_name }}</p>
+  <p><strong>Last Name:</strong> {{ user_profile.last_name }}</p>
+  <p><strong>Username:</strong> {{ user_profile.user.username }}</p>
+  <p><strong>Email:</strong> {{ user_profile.user.email }}</p>
+  <p><strong>Phone Number:</strong> {{ user_profile.phone_number }}</p>
+  <p><strong>Address:</strong> {{ user_profile.address }}</p>
+
+ 
+
+</div>
+{% endblock %}

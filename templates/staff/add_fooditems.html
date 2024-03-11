@@ -1,0 +1,21 @@
+{% extends "staff/view_fooditems.html" %}
+
+{% load static %}
+
+
+{% block content %}
+
+
+<div class="container  mx-auto mt-5" style="height: 80vh; margin-top: 50px; border: 1px soild rgb(214, 152, 72);">
+    
+    <div class="col-md-6 mx-auto p-5" style="box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px; border-radius: 10px;">
+        <h2>Add Food</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Add Food</button>
+</form>
+</div>
+</div>
+
+{% endblock %}
