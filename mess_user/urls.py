@@ -16,6 +16,7 @@ urlpatterns=[
     path('submit_feedback/', views.submit_feedback, name='submit_feedback'),
     path('view_feedbacks/', views.view_feedbacks, name='view_feedbacks'),
     path('view_notification/', views.view_notification, name='view_notification'),
+    path('edit_profile/<int:user_id>/', views.edit_profile, name='edit_profile'),
     
     
 

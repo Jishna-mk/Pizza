@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .forms import UserAddForm,UserProfileForm
 from django.contrib import messages
 from django.contrib.auth.models import User, Group
@@ -87,7 +87,19 @@ def view_profile(request):
     user_profile = UserProfile.objects.get(user=request.user)
     return render(request, 'view_profile.html', {'user_profile': user_profile})
 
+def edit_profile(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user_profile = get_object_or_404(UserProfile, user=user)
 
+    if request.method == 'POST':
+        form = UserProfileForm(request.POST, instance=user_profile)
+        if form.is_valid():
+            form.save()
+            return redirect('view_profile')  
+    else:
+        form = UserProfileForm(instance=user_profile)
+
+    return render(request, 'user/edit_profile.html', {'form': form})
 @login_required
 def user_bookings(request):
     # Retrieve all booked items for the current user
