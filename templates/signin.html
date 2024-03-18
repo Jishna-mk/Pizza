@@ -38,10 +38,12 @@
 </style>
 
 {% for message in messages %}
-    <div class="alert alert-success" role="alert" id="alertBox" style="width: 500px;">
-        <h6>{{ message.message }}</h6>
-        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    </div>
+<div class="alert alert-danger alert-dismissible fade show" style="position: fixed; z-index: 90; right: 100px; top: 10px" role="alert">
+    <strong>{{ message }} !!!</strong>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
 {% endfor %}
 
 <div class="container mb-5">

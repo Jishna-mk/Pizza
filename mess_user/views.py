@@ -99,7 +99,7 @@ def edit_profile(request, user_id):
     else:
         form = UserProfileForm(instance=user_profile)
 
-    return render(request, 'user/edit_profile.html', {'form': form})
+    return render(request, 'edit_profile.html', {'form': form})
 @login_required
 def user_bookings(request):
     # Retrieve all booked items for the current user

@@ -49,6 +49,10 @@ def delete_food_item(request,pk):
 def book_item(request, food_id):
     food_item = get_object_or_404(FoodItem, pk=food_id)
 
+    if not hasattr(request.user, 'profile'):
+        # Redirect to create profile page
+        return redirect('create_profile')
+
     if request.method == 'POST':
         quantity = int(request.POST.get('quantity', 0))
         if food_item.book_item(quantity, request.user):

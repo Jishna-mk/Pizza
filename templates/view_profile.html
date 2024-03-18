@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<div class="container mt-5 mb-5" style="height: 400px;">
+<div class="container col-md-4 mt-5 mb-5" style="height: 400px; box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;">
     <h1 class="text-center">User Profile</h1>
   <p><strong>First Name:</strong> {{ user_profile.first_name }}</p>
   <p><strong>Last Name:</strong> {{ user_profile.last_name }}</p>
@@ -11,7 +11,7 @@
   <p><strong>Phone Number:</strong> {{ user_profile.phone_number }}</p>
   <p><strong>Address:</strong> {{ user_profile.address }}</p>
 
- 
+  <a href="{% url 'edit_profile' user_profile.user.id %}" class="btn btn-warning">Edit Profile</a>
 
 </div>
 {% endblock %}
