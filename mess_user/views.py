@@ -57,9 +57,15 @@ def signin(request):
     return render(request, "signin.html")
 
 
+# def food_item_list(request):
+#     food_items = FoodItem.objects.all()
+#     return render(request, 'view_fooditems.html', {'food_items': food_items})
+
 def food_item_list(request):
     food_items = FoodItem.objects.all()
-    return render(request, 'view_fooditems.html', {'food_items': food_items})
+    notifications = AdminNotification.objects.all().order_by('-created_at')
+    return render(request, 'view_fooditems.html', {'food_items': food_items, 'notifications': notifications})
+
 
 def signout(request):
     logout(request)

@@ -8,9 +8,16 @@ from mess_user.models import UserProfile,Feedback
 
 
 
+# def food_item_list(request):
+#     food_items = FoodItem.objects.all()
+#     return render(request, 'staff/view_fooditems.html', {'food_items': food_items})
 def food_item_list(request):
     food_items = FoodItem.objects.all()
-    return render(request, 'staff/view_fooditems.html', {'food_items': food_items})
+    notifications = AdminNotification.objects.all().order_by('-created_at')
+    total_notifications_count = notifications.count()
+    return render(request, 'staff/view_fooditems.html', {'food_items': food_items, 'notifications': notifications, 'total_notifications_count': total_notifications_count})
+
+
 
 def add_food_item(request):
     if request.method == 'POST':
@@ -160,9 +167,15 @@ def feedback(request):
 from django.shortcuts import render, redirect
 from .models import AdminNotification
 
+from django.db.models import Count
+from django.db.models import Count
+from django.http import JsonResponse
+
 def admin_notifications(request):
     notifications = AdminNotification.objects.all().order_by('-created_at')
-    return render(request, 'staff/notifications.html', {'notifications': notifications})
+    total_notifications_count = notifications.count()  # Calculate total count
+    return render(request, 'staff/notifications.html', {'notifications': notifications, 'total_notifications_count': total_notifications_count})
+
 
 def delete_notification(request, notification_id):
     notification = AdminNotification.objects.get(pk=notification_id)

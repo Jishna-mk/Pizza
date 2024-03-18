@@ -1,29 +1,24 @@
 {% extends "staff/view_fooditems.html" %}
-
 {% load static %}
-
-
-
 
 {% block content %}
 <div class="container col-md-6 mt-5 mb-5">
     <h2>Admin Notifications</h2>
+    <p>Total Notifications: {{ total_notifications_count }}</p>
     {% if notifications %}
-      <p>Total Notifications: {{ notifications|length }}</p>
-      {% for notification in notifications %}
-        <div class="notification-box mb-3 p-3 border rounded">
-          <h3>{{ notification.title }}</h3>
-          <p>{{ notification.message }}</p>
-          <p>Created at: {{ notification.created_at }}</p>
-          <form action="{% url 'delete_notification' notification.id %}" method="post">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Delete</button>
-          </form>
-        </div>
-      {% endfor %}
+        {% for notification in notifications %}
+            <div class="notification-box mb-3 p-3 border rounded">
+                <h3>{{ notification.title }}</h3>
+                <p>{{ notification.message }}</p>
+                <p>Created at: {{ notification.created_at }}</p>
+                <form action="{% url 'delete_notification' notification.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        {% endfor %}
     {% else %}
-      <p>No notifications available.</p>
+        <p>No notifications available.</p>
     {% endif %}
-  </div>
-  
+</div>
 {% endblock %}

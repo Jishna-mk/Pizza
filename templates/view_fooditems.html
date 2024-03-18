@@ -82,43 +82,71 @@
              
 
 {%block content%}
-    
-    
-<br><br>
 <div class="container mt-5">
-    <h1 class="text-center">Food List</h1>
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
     <div class="row">
-        {% if food_items %}
-            {% for food_item in food_items %}
-                <div class="col-md-6">
-                    <div class="card mb-3 " style="width: 300px;">
-                        <img src="{{ food_item.image.url }}" class="card-img-top" alt="{{ food_item.name }}" style="height: 200px; width: 300px;">
-                        <div class="card-body">
-                            <h3 class="card-title">{{ food_item.name }}</h3>
-                            <p class="card-text">Price: {{ food_item.price }}</p>
-                            <p class="card-text">Quantity Available: {{ food_item.quantity_available }}</p>
-                            {% if food_item.quantity_available > 0 %}
-                                <a href="{% url 'book_item' food_item.food_id %}" class="btn btn-success">
-                                    Book
-                                </a>
-                            {% else %}
-                                <p class="text-danger">Quantity not available</p>
-                            {% endif %}
+        <!-- Sidebar for Notifications -->
+        <div class="col-md-4">
+            <div class="container mt-5 mb-5">
+                <h2 class="custom-h2">Notifications</h2>
+                <!-- Place your notification sidebar code here -->
+                <!-- For example, if you have notifications available in the context, you can loop through them -->
+                {% if notifications %}
+                  
+                    <p class="text-dark">Total Notifications: <span class="text-brown" style="color: brown; font-size: 20px;">{{ notifications|length }}</span> </p>
+                    {% for notification in notifications %}
+                        <div class="notification-box mb-3 p-3 border rounded">
+                            <h3>{{ notification.title }}</h3>
+                            <p>{{ notification.message }}</p>
+                            <p>Created at: {{ notification.created_at }}</p>
                         </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <div class="col-12">
-                <p>No food items available.</p>
+                    {% endfor %}
+                {% else %}
+                    <p>No notifications available.</p>
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
+        <!-- End of Sidebar for Notifications -->
+        
+        <!-- Main Content for Food Items -->
+        <div class="col-md-8">
+            <h1 class="text-center">Food List</h1>
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
+            <div class="row">
+                {% if food_items %}
+                    {% for food_item in food_items %}
+                        <div class="col-md-6">
+                            <div class="card mb-3 " style="width: 300px;">
+                                <img src="{{ food_item.image.url }}" class="card-img-top" alt="{{ food_item.name }}" style="height: 200px; width: 300px;">
+                                <div class="card-body">
+                                    <h3 class="card-title">{{ food_item.name }}</h3>
+                                    <p class="card-text">Price: {{ food_item.price }}</p>
+                                    <p class="card-text">Quantity Available: {{ food_item.quantity_available }}</p>
+                                    {% if food_item.quantity_available > 0 %}
+                                        <a href="{% url 'book_item' food_item.food_id %}" class="btn btn-success">
+                                            Book
+                                        </a>
+                                    {% else %}
+                                        <p class="text-danger">Quantity not available</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <p>No food items available.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- End of Main Content for Food Items -->
     </div>
 </div>
-<script>
+
+ 
+  <script>
     function bookFood(foodItemId) {
         // You can implement your booking logic here
         alert('Booking food item with ID ' + foodItemId);

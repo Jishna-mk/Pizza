@@ -57,9 +57,13 @@
                         <a class="nav-link" href="{%url 'add_notification'%}">Add Notifications</a>
                     </li>
                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="{%url 'admin_notifications'%}">Notifications  </a>
+                    <li class="nav-item" id="notifications-link">
+                        
+                        <a class="nav-link" href="{% url 'admin_notifications' %}">
+                            Notifications {{ total_notifications_count }}
+                        </a>
                     </li>
+                    
                   
                 </ul> 
                 <ul class="navbar-nav ml-auto">
@@ -73,43 +77,65 @@
     
 {%block content%}
     
-    
-<br><br><br><br>
 <div class="container mt-5">
-    <h1 class="text-center">Food List</h1>
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
     <div class="row">
-        {% if food_items %}
-            {% for food_item in food_items %}
-                <div class="col-md-6">
-                    <div class="card mb-3" style="width: 300px;">
-                        <img src="{{ food_item.image.url }}" class="card-img-top" alt="{{ food_item.name }}" style="height: 200px; width: 300px;">
-                        <div class="card-body">
-                            <h3 class="card-title">{{ food_item.name }}</h3>
-                            <p class="card-text">Price: {{ food_item.price }}</p>
-                            <p class="card-text">Quantity Available: {{ food_item.quantity_available }}</p>
-                           
-                            
-                            <a href="{%url 'delete_food_item' food_item.food_id %}" onclick="return confirm('Are you sure want to delete?')"><i class="fa fa-trash" style='font-size:30px; color: #000;'></i></a>
-                            <a href="{% url 'edit_food_item' food_item.pk %}"><i class='fas fa-edit' style='font-size:30px; color: #000;'></i></a>
-                            
-                    
-
-
-                            
+        <!-- Main Content for Food Items -->
+        <div class="col-md-8 order-md-2">
+            <h1 class="text-center">Food List</h1>
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
+            <div class="row">
+                {% if food_items %}
+                    {% for food_item in food_items %}
+                        <div class="col-md-6">
+                            <div class="card mb-3" style="width: 300px;">
+                                <img src="{{ food_item.image.url }}" class="card-img-top" alt="{{ food_item.name }}" style="height: 200px; width: 300px;">
+                                <div class="card-body">
+                                    <h3 class="card-title">{{ food_item.name }}</h3>
+                                    <p class="card-text">Price: {{ food_item.price }}</p>
+                                    <p class="card-text">Quantity Available: {{ food_item.quantity_available }}</p>
+                                    <a href="{% url 'delete_food_item' food_item.food_id %}" onclick="return confirm('Are you sure want to delete?')"><i class="fa fa-trash" style='font-size:30px; color: #000;'></i></a>
+                                    <a href="{% url 'edit_food_item' food_item.pk %}"><i class='fas fa-edit' style='font-size:30px; color: #000;'></i></a>
+                                </div>
+                            </div>
                         </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <p>No food items available.</p>
                     </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            <div class="col-12">
-                <p>No food items available.</p>
+                {% endif %}
             </div>
-        {% endif %}
+        </div>
+        <!-- End of Main Content for Food Items -->
+        
+        <!-- Sidebar for Notifications -->
+        <div class="col-md-4 order-md-1">
+            <div class="notification-box mb-3 p-3 border rounded">
+                <h2>Admin Notifications</h2>
+                <p>Total Notifications: {{ total_notifications_count }}</p>
+                {% if notifications %}
+                    {% for notification in notifications %}
+                        <div class="notification-item mb-3">
+                            <h3>{{ notification.title }}</h3>
+                            <p>{{ notification.message }}</p>
+                            <p>Created at: {{ notification.created_at }}</p>
+                            <form action="{% url 'delete_notification' notification.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p>No notifications available.</p>
+                {% endif %}
+            </div>
+        </div>
+        <!-- End of Sidebar for Notifications -->
     </div>
 </div>
+
 
 <script>
     function deleteFood(foodId) {
@@ -133,8 +159,6 @@
         }
     }
 </script>
-
-
 
     {%endblock%}
 
